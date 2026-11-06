@@ -1,0 +1,321 @@
+erDiagram
+    products {
+        int id PK
+        varchar name
+        text description
+        boolean active
+    }
+    commercial_offers {
+        int id PK
+        varchar name
+        decimal selling_price_usd
+        boolean active
+    }
+    offer_products {
+        int id PK
+        int offer_id FK
+        int product_id FK
+        int quantity
+    }
+    product_variable_costs {
+        int id PK
+        int product_id FK
+        varchar cost_name
+        decimal cost_usd
+    }
+    order_variable_cost_assumptions {
+        int id PK
+        varchar name
+        decimal shipping_cost_usd
+        decimal payment_fee_percent
+        decimal payment_fee_fixed_usd
+        decimal other_cost_usd
+    }
+    financial_assumptions {
+        int id PK
+        varchar name
+        decimal monthly_fixed_cost_usd
+        int projection_months
+    }
+    advertising_acquisition_history {
+        int id PK
+        date period_start
+        date period_end
+        varchar channel
+        decimal ad_spend_usd
+        int acquired_customers
+        decimal attributed_revenue_usd
+    }
+    commercial_scenarios {
+        int id PK
+        int offer_id FK
+        int order_cost_assumption_id FK
+        decimal monthly_ad_spend_usd
+        decimal expected_cac_usd
+    }
+    repurchase_patterns {
+        int id PK
+        varchar name
+        int month_number
+        decimal repurchase_probability
+    }
+    subscription_parameters {
+        int id PK
+        varchar name
+        decimal monthly_price_usd
+        decimal monthly_churn_rate
+        decimal monthly_variable_cost_usd
+    }
+    simulation_configs {
+        int id PK
+        int financial_assumption_id FK
+        int projection_months
+    }
+    simulation_config_scenarios {
+        int id PK
+        int simulation_config_id FK
+        int scenario_id FK
+    }
+
+    team_members {
+        int id PK
+        varchar name
+        varchar email UK
+        varchar department
+        boolean active
+    }
+    marketing_channels {
+        int id PK
+        varchar code UK
+        varchar name UK
+        varchar channel_type
+    }
+    campaigns {
+        int id PK
+        int channel_id FK
+        varchar name
+        decimal planned_budget_usd
+        date start_date
+        date end_date
+        varchar status
+    }
+    campaign_daily_metrics {
+        bigint id PK
+        int campaign_id FK
+        date metric_date
+        decimal ad_spend_usd
+        decimal other_marketing_cost_usd
+        bigint impressions
+        bigint clicks
+    }
+    contacts {
+        int id PK
+        varchar customer_type
+        varchar first_name
+        varchar last_name
+        varchar company_name
+        varchar email UK
+    }
+    customer_journey_stages {
+        int id PK
+        varchar code UK
+        varchar name
+        int sort_order UK
+    }
+    customer_touchpoints {
+        bigint id PK
+        int contact_id FK
+        int journey_stage_id FK
+        int campaign_id FK
+        int channel_id FK
+        varchar touchpoint_type
+        datetime occurred_at
+    }
+    sales_funnel_stages {
+        int id PK
+        varchar code UK
+        varchar name
+        int sort_order UK
+        boolean is_closed
+    }
+    leads {
+        bigint id PK
+        int contact_id FK
+        int source_campaign_id FK
+        int source_channel_id FK
+        int marketing_owner_id FK
+        varchar lead_status
+        datetime created_at
+    }
+    lead_stage_history {
+        bigint id PK
+        bigint lead_id FK
+        int stage_id FK
+        int changed_by_id FK
+        datetime entered_at
+        datetime exited_at
+    }
+    sales_opportunities {
+        bigint id PK
+        bigint lead_id FK,UK
+        int sales_owner_id FK
+        varchar status
+        decimal expected_value_usd
+        decimal won_value_usd
+        datetime opened_at
+        datetime closed_at
+    }
+    content_items {
+        bigint id PK
+        int campaign_id FK
+        int author_id FK
+        varchar title
+        varchar content_type
+        datetime scheduled_at
+        datetime published_at
+        varchar status
+    }
+    content_channels {
+        bigint content_id PK,FK
+        int channel_id PK,FK
+    }
+    content_reviews {
+        bigint id PK
+        bigint content_id FK
+        int reviewer_id FK
+        varchar action
+        datetime reviewed_at
+    }
+    marketing_sales_handoffs {
+        bigint id PK
+        bigint lead_id FK
+        int marketing_owner_id FK
+        int sales_owner_id FK
+        int attempt_number
+        datetime delivered_at
+        varchar decision
+    }
+    handoff_followups {
+        bigint id PK
+        bigint handoff_id FK
+        int responsible_id FK
+        datetime followed_up_at
+    }
+    subscription_plans {
+        int id PK
+        int offer_id FK
+        int subscription_parameters_id FK
+        varchar customer_type
+        int delivery_interval
+        varchar delivery_frequency_unit
+    }
+    subscriptions {
+        bigint id PK
+        int contact_id FK
+        int plan_id FK
+        bigint source_lead_id FK,UK
+        varchar status
+        date started_on
+        date cancelled_on
+    }
+    subscription_items {
+        bigint subscription_id PK,FK
+        int product_id PK,FK
+        decimal quantity
+    }
+    subscription_orders {
+        bigint id PK
+        bigint subscription_id FK
+        varchar order_number UK
+        varchar status
+        datetime ordered_at
+        datetime paid_at
+        decimal total_usd
+    }
+    subscription_order_items {
+        bigint id PK
+        bigint order_id FK
+        int product_id FK
+        decimal quantity
+        decimal unit_price_usd
+        decimal unit_cost_usd
+    }
+    deliveries {
+        bigint id PK
+        bigint order_id FK,UK
+        date scheduled_for
+        datetime delivered_at
+        varchar status
+    }
+    subscription_events {
+        bigint id PK
+        bigint subscription_id FK
+        int previous_plan_id FK
+        int new_plan_id FK
+        varchar event_type
+        datetime occurred_at
+    }
+    campaign_attributions {
+        bigint id PK
+        int campaign_id FK
+        bigint lead_id FK,UK
+        bigint subscription_id FK,UK
+        varchar attribution_model
+        datetime attributed_at
+    }
+
+    commercial_offers ||--o{ offer_products : contains
+    products ||--o{ offer_products : included_in
+    products ||--o{ product_variable_costs : has_cost
+    commercial_offers ||--o{ commercial_scenarios : evaluated_by
+    order_variable_cost_assumptions o|--o{ commercial_scenarios : applies_to
+    financial_assumptions o|--o{ simulation_configs : configures
+    simulation_configs ||--o{ simulation_config_scenarios : includes
+    commercial_scenarios ||--o{ simulation_config_scenarios : participates
+
+    marketing_channels ||--o{ campaigns : hosts
+    campaigns ||--o{ campaign_daily_metrics : records
+    contacts ||--o{ customer_touchpoints : experiences
+    customer_journey_stages ||--o{ customer_touchpoints : classifies
+    campaigns o|--o{ customer_touchpoints : originates
+    marketing_channels o|--o{ customer_touchpoints : direct_source
+
+    contacts ||--o{ leads : generates
+    campaigns o|--o{ leads : campaign_source
+    marketing_channels o|--o{ leads : direct_source
+    team_members ||--o{ leads : marketing_owner
+    leads ||--o{ lead_stage_history : transitions
+    sales_funnel_stages ||--o{ lead_stage_history : stage
+    team_members ||--o{ lead_stage_history : changed_by
+    leads ||--o| sales_opportunities : becomes
+    team_members ||--o{ sales_opportunities : sales_owner
+
+    campaigns o|--o{ content_items : contains
+    team_members ||--o{ content_items : authors
+    content_items ||--o{ content_channels : distributed_on
+    marketing_channels ||--o{ content_channels : receives
+    content_items ||--o{ content_reviews : reviewed_in
+    team_members ||--o{ content_reviews : reviews
+
+    leads ||--o{ marketing_sales_handoffs : handed_off
+    team_members ||--o{ marketing_sales_handoffs : owns
+    marketing_sales_handoffs ||--o{ handoff_followups : followed_by
+    team_members ||--o{ handoff_followups : performs
+
+    commercial_offers ||--o{ subscription_plans : commercial_basis
+    subscription_parameters o|--o{ subscription_plans : financial_basis
+    contacts ||--o{ subscriptions : subscribes
+    subscription_plans ||--o{ subscriptions : selected
+    leads o|--o| subscriptions : converts_to
+    subscriptions ||--o{ subscription_items : customized_with
+    products ||--o{ subscription_items : selected
+    subscriptions ||--o{ subscription_orders : generates
+    subscription_orders ||--o{ subscription_order_items : contains
+    products ||--o{ subscription_order_items : sold_as
+    subscription_orders ||--o| deliveries : fulfilled_by
+    subscriptions ||--o{ subscription_events : changes
+    subscription_plans o|--o{ subscription_events : plan_reference
+
+    campaigns ||--o{ campaign_attributions : credited_by
+    leads ||--o| campaign_attributions : attributed_conversion
+    subscriptions ||--o| campaign_attributions : acquired_subscription

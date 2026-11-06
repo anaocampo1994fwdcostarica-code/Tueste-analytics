@@ -1,0 +1,70 @@
+flowchart TB
+  classDef existing fill:#dff3e5,stroke:#26643f,color:#173d29,stroke-width:2px
+  classDef proposed fill:#fff3d6,stroke:#a66b00,color:#5e3d00,stroke-width:2px,stroke-dasharray:6 4
+  classDef approval fill:#fde4e4,stroke:#a43a3a,color:#641f1f,stroke-width:2px
+  classDef external fill:#e8eefc,stroke:#496aa8,color:#263d6b,stroke-dasharray:4 3
+
+  U[Usuario / responsables humanos]:::approval
+  R[Interfaz React<br/>EXISTENTE]:::existing
+  E[Backend Express GET<br/>22 endpoints EXISTENTES]:::existing
+  DB[(MySQL DEMO<br/>36 tablas EXISTENTE)]:::existing
+  FE[financialEngine.js<br/>EXISTENTE]:::existing
+
+  O[Agente orquestador<br/>PROPUESTO]:::proposed
+  AP{Punto de aprobación humana<br/>PROPUESTO}:::approval
+
+  subgraph Agents[Agentes especializados PROPUESTOS]
+    A1[Campañas y publicidad]:::proposed
+    A2[Contenidos y calendario]:::proposed
+    A3[Revisión y aprobaciones]:::proposed
+    A4[Embudo y leads]:::proposed
+    A5[Traspaso marketing-ventas]:::proposed
+    A6[Suscripciones y clientes]:::proposed
+    A7[Analítica comercial y financiera]:::proposed
+  end
+
+  subgraph Tools[Herramientas externas PROPUESTAS]
+    T1[Plataformas publicitarias]:::external
+    T2[CRM / correo / calendario]:::external
+    T3[CMS / activos / publicación]:::external
+    T4[Pagos / logística]:::external
+    T5[BI / exportación]:::external
+  end
+
+  U --> R
+  R --> E
+  R -. solicitud futura .-> O
+  O --> A1
+  O --> A2
+  O --> A3
+  O --> A4
+  O --> A5
+  O --> A6
+  O --> A7
+
+  A1 --> O
+  A2 --> O
+  A3 --> O
+  A4 --> O
+  A5 --> O
+  A6 --> O
+  A7 --> O
+
+  O --> AP
+  AP --> U
+  U -->|aprueba o rechaza| AP
+  AP --> O
+
+  O -. herramientas de lectura .-> E
+  E --> DB
+  A7 -. cálculo con entradas suficientes .-> FE
+
+  O -. acceso controlado futuro .-> T1
+  O -. acceso controlado futuro .-> T2
+  O -. acceso controlado futuro .-> T3
+  O -. acceso controlado futuro .-> T4
+  O -. exportación futura .-> T5
+
+  N[Regla: ningún agente especializado<br/>se comunica directamente con otro]:::approval
+  N -. aplica a .-> Agents
+

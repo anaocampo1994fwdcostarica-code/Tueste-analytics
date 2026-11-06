@@ -1,0 +1,125 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"><title>Tueste Business Solutions</title><style>
+@page{size:A4;margin:18mm 16mm 20mm}*{box-sizing:border-box}body{color:#1d2c24;font:10.5pt/1.48 Arial,sans-serif;max-width:180mm;margin:auto}h1{color:#173d29;font-size:25pt;border-bottom:3px solid #b97816;padding-bottom:8px;page-break-before:always}h1:first-child{page-break-before:auto;margin-top:38mm}h2{color:#22553b;font-size:17pt;margin-top:22px;border-bottom:1px solid #b7c8bc}h3{color:#73501c;font-size:13pt}p,li{text-align:justify}table{width:100%;border-collapse:collapse;margin:12px 0 18px;font-size:8.4pt}tr{page-break-inside:avoid}th{background:#173d29;color:white}th,td{border:1px solid #9aac9f;padding:5px;vertical-align:top}code{font-family:Consolas,monospace;background:#edf2ee;padding:1px 3px}pre{white-space:pre-wrap;background:#edf2ee;border-left:4px solid #b97816;padding:10px;font-size:8.5pt}blockquote{border-left:4px solid #b97816;margin:12px 0;padding:8px 14px;background:#fff7e9}a{color:#22553b}@media print{a{text-decoration:none}}
+</style></head><body><h1>Tueste Analytics — Business Solutions</h1>
+<p><strong>Enunciado oficial:</strong> *Primer Postejercicio — Business Solutions: Mercadeo comercial en una empresa de servicios*.</p>
+<h2>Portada</h2>
+<p><strong>Título:</strong> Tueste Analytics: solución CRM, analítica y arquitectura multiagente para un servicio de suscripción de café   <strong>Curso:</strong> <code>[PENDIENTE: nombre y código del curso]</code>   <strong>Institución:</strong> <code>[PENDIENTE: institución]</code>   <strong>Profesor(a):</strong> <code>[PENDIENTE: nombre]</code>   <strong>Estudiante(s):</strong> <code>[PENDIENTE: nombres y carnés]</code>   <strong>Grupo:</strong> <code>[PENDIENTE]</code>   <strong>Fecha de entrega:</strong> <code>[PENDIENTE]</code>   <strong>Versión:</strong> Entrega académica preparada, Etapa 6  </p>
+<blockquote>Advertencia: todos los registros y resultados cuantitativos presentados son</blockquote>
+<blockquote>ficticios y se usan exclusivamente para demostración académica. No representan</blockquote>
+<blockquote>resultados históricos reales de una empresa.</blockquote>
+<h2>Índice</h2>
+<ol><li><a href="#1-introducción">Introducción</a></li><li><a href="#2-descripción-de-tueste">Descripción de Tueste</a></li><li><a href="#3-problema-empresarial">Problema empresarial</a></li><li><a href="#4-objetivos">Objetivos</a></li><li><a href="#5-solución-propuesta">Solución propuesta</a></li><li><a href="#6-arquitectura-tecnológica">Arquitectura tecnológica</a></li><li><a href="#7-modelo-de-datos-y-normalización">Modelo de datos y normalización</a></li><li><a href="#8-crm-y-recorrido-del-cliente">CRM y recorrido del cliente</a></li><li><a href="#9-campañas-y-proceso-de-marketing">Campañas y proceso de marketing</a></li><li><a href="#10-embudo-y-traspaso-a-ventas">Embudo y traspaso a ventas</a></li><li><a href="#11-métricas-sql-y-resultados-demo">Métricas SQL y resultados DEMO</a></li><li><a href="#12-arquitectura-de-agentes">Arquitectura de agentes</a></li><li><a href="#13-agente-orquestador">Agente orquestador</a></li><li><a href="#14-caso-de-uso-completo">Caso de uso completo</a></li><li><a href="#15-validaciones">Validaciones</a></li><li><a href="#16-limitaciones">Limitaciones</a></li><li><a href="#17-conclusiones">Conclusiones</a></li><li><a href="#18-bibliografía">Bibliografía</a></li><li><a href="#19-anexos">Anexos</a></li></ol>
+<h2>1. Introducción</h2>
+<p>Tueste Analytics es una aplicación académica de Business Solutions que integra un modelo CRM comercial, analítica de marketing, suscripciones recurrentes y un diseño de arquitectura multiagente. El proyecto busca demostrar cómo una empresa de servicios puede conectar el gasto publicitario con el recorrido del cliente, el embudo, la conversión, los pedidos y los resultados comerciales.</p>
+<p>La solución utiliza React, Express y MySQL. El entorno DEMO contiene 36 tablas y 514 registros ficticios. La API expone 22 endpoints de solo lectura y el frontend identifica permanentemente los datos como demostrativos. Adicionalmente existe un motor financiero independiente; sus cálculos completos solo se presentan cuando hay entradas suficientes.</p>
+<p>La entrega responde a cinco criterios oficiales, cada uno con un valor de 20 %: análisis comercial y entidades; diagrama ER; script SQL normalizado; datos y consultas; y documentación de agentes/orquestador. Los entregables oficiales son el documento académico PDF, un SQL autocontenido y capturas de ejecución.</p>
+<h2>2. Descripción de Tueste</h2>
+<p>Tueste se modela como una empresa ficticia de suscripción de café para hogares y empresas. El producto físico forma parte de un servicio recurrente: el cliente elige un plan, recibe productos periódicamente y puede renovar, pausar, cambiar o cancelar su suscripción.</p>
+<p>El ciclo comercial incluye captación, interacción, calificación, oportunidad, traspaso a ventas, cierre, alta de suscripción, pedidos, entregas y retención. El modelo admite clientes individuales y empresariales, composición de ofertas y personalización de productos por suscripción.</p>
+<h2>3. Problema empresarial</h2>
+<p>Sin una fuente integrada, marketing puede observar impresiones y clics sin saber si generaron clientes o ingresos. Ventas puede recibir leads sin contexto ni trazabilidad. Operaciones puede gestionar pedidos sin relacionarlos con la campaña que originó la suscripción. Además, mezclar presupuesto con gasto, histórico agregado con hechos diarios o pedidos con métricas publicitarias puede producir doble conteo.</p>
+<p>El problema central es conectar de forma normalizada y auditable:</p>
+<ul><li>campañas, canales y costos;</li><li>contenidos y aprobaciones;</li><li>contactos, touchpoints y leads;</li><li>etapas, oportunidades y handoffs;</li><li>suscripciones, pedidos, entregas e ingresos;</li><li>indicadores comerciales y financieros.</li></ul>
+<h2>4. Objetivos</h2>
+<h3>Objetivo general</h3>
+<p>Diseñar y demostrar una solución analítica que conecte el proceso comercial de Tueste con métricas de marketing, ventas y suscripción, y documente una futura arquitectura multiagente gobernada por aprobación humana.</p>
+<h3>Objetivos específicos</h3>
+<ol><li>Extender el modelo financiero original con entidades CRM y comerciales en</li></ol>
+<p>   tercera forma normal.</p>
+<ol><li>Registrar campañas, contenidos, recorrido, embudo, handoffs y suscripciones.</li><li>Calcular CPC, CTR, CAC, ROAS, conversiones, ciclo y ticket desde hechos.</li><li>Cargar un conjunto ficticio coherente y reproducible en una base aislada.</li><li>Exponer información mediante una API de solo lectura y un frontend DEMO.</li><li>Mantener métricas financieras parciales claramente diferenciadas.</li><li>Diseñar siete agentes especializados y un orquestador sin atribuirles una</li></ol>
+<p>   implementación inexistente.</p>
+<h2>5. Solución propuesta</h2>
+<p>La solución combina cuatro resultados existentes y una propuesta futura:</p>
+<ol><li><strong>Modelo de datos:</strong> 12 tablas financieras originales y 24 tablas</li></ol>
+<p>   comerciales nuevas.</p>
+<ol><li><strong>Datos DEMO:</strong> 514 registros ficticios, identificados como <code>[DEMO]</code>,</li></ol>
+<p>   <code>DEMO_</code> o <code>example.invalid</code>.</p>
+<ol><li><strong>API e interfaz:</strong> consultas de solo lectura y siete secciones comerciales.</li><li><strong>Analítica:</strong> 16 consultas SQL y motor financiero independiente.</li><li><strong>Arquitectura futura:</strong> siete agentes coordinados exclusivamente por un</li></ol>
+<p>   orquestador con aprobación humana.</p>
+<p>La arquitectura multiagente no está implementada. Es un diseño académico con contratos, responsabilidades, RACI, riesgos y límites de autonomía.</p>
+<h2>6. Arquitectura tecnológica</h2>
+<h3>Componentes existentes</h3>
+<ul><li><strong>React + Vite:</strong> interfaz, navegación, estados de carga/error y banner DEMO.</li><li><strong>Express:</strong> API con 22 rutas <code>GET</code> y manejo consistente de errores.</li><li><strong>MySQL 8:</strong> esquema relacional DEMO de 36 tablas.</li><li><strong>financialEngine.js:</strong> funciones financieras puras y probadas.</li><li><strong>Variables de entorno:</strong> selección explícita del modo DEMO sin credenciales</li></ul>
+<p>  versionadas.</p>
+<p>Flujo actual:</p>
+<pre data-language="text"><code>Usuario → React → Express GET → MySQL DEMO
+                    ↘ motor financiero independiente</code></pre>
+<h3>Componentes propuestos</h3>
+<p>El orquestador, los agentes especializados, conectores externos, bandeja de aprobación y endpoints de escritura son únicamente diseños. La API actual no permite mutaciones.</p>
+<h3>Correspondencia con los criterios oficiales</h3>
+<table><thead><tr><th>Criterio oficial</th><th>Evidencia principal</th></tr></thead><tbody><tr><td>1. Análisis comercial e identificación de entidades (20 %)</td><td>Secciones 2–5, 8–10 y <code>database/modelo_comercial_propuesto.md</code></td></tr><tr><td>2. Diagrama ER, cardinalidades e intermedias (20 %)</td><td>Sección 7 y <code>entrega/diagramas/diagrama_er_comercial.svg</code></td></tr><tr><td>3. SQL, integridad y 3FN (20 %)</td><td>Sección 7 y <code>entrega/tueste_business_solutions.sql</code></td></tr><tr><td>4. Datos ficticios y consultas (20 %)</td><td>Sección 11, 514 registros y consultas incluidas en el SQL</td></tr><tr><td>5. Agentes, orquestador, diagrama y flujo (20 %)</td><td>Secciones 12–14 y documentación en <code>docs/</code></td></tr></tbody></table>
+<h2>7. Modelo de datos y normalización</h2>
+<h3>Alcance</h3>
+<p>Las 12 tablas originales gestionan productos, ofertas, costos, supuestos, histórico, escenarios y simulaciones. Las 24 nuevas cubren:</p>
+<ul><li>equipo, canales, campañas y métricas;</li><li>contactos, recorrido, leads, etapas y oportunidades;</li><li>contenidos, canales y revisiones;</li><li>handoffs y seguimientos;</li><li>planes, suscripciones, pedidos, entregas y eventos;</li><li>atribución de campañas.</li></ul>
+<h3>Tercera forma normal</h3>
+<p>El diseño busca 3FN mediante:</p>
+<ul><li>catálogos separados para canales y etapas;</li><li>hechos diarios separados de campañas;</li><li>historiales separados del estado actual;</li><li>tablas N:M <code>offer_products</code>, <code>content_channels</code>, <code>subscription_items</code> y</li></ul>
+<p>  <code>simulation_config_scenarios</code>;</p>
+<ul><li>métricas derivadas calculadas, no almacenadas;</li><li>atribución única por lead y suscripción;</li><li>claves foráneas con tipos compatibles.</li></ul>
+<p>Las instantáneas de precio/costo en líneas de pedido describen el evento histórico, no el precio actual del catálogo. Las duplicaciones controladas de estado (<code>content_items.status</code>, <code>subscriptions.status</code>) se justifican por acceso operativo y deben actualizarse atómicamente con sus historiales.</p>
+<h3>Integridad</h3>
+<p>La prueba aislada en MySQL 8.0.46 creó 36 tablas, 51 FK y 51 restricciones <code>CHECK</code>. Se verificaron fechas, cantidades, importes, estados, etapa abierta y atribución única.</p>
+<h2>8. CRM y recorrido del cliente</h2>
+<p>El CRM académico se construye con <code>contacts</code>, <code>leads</code>, <code>sales_opportunities</code> y <code>subscriptions</code>. Un contacto puede participar en más de un ciclo comercial sin duplicar su identidad.</p>
+<p>El recorrido se clasifica con cinco etapas: conciencia, consideración, decisión, retención y recomendación. <code>customer_touchpoints</code> registra el momento, tipo y origen de cada interacción. El conjunto DEMO contiene 12 contactos y 32 touchpoints.</p>
+<p>La consulta SQL 12 reconstruye cronológicamente el recorrido de un contacto. La aplicación actual no incluye una pantalla dedicada a dicho recorrido, por lo que esta parte es demostrable mediante SQL y modelo, pero la evidencia visual de UI permanece parcial.</p>
+<h2>9. Campañas y proceso de marketing</h2>
+<p><code>marketing_channels</code> normaliza canales pagados, orgánicos, referidos y directos. <code>campaigns</code> almacena objetivo, periodo, estado y presupuesto planificado. <code>campaign_daily_metrics</code> almacena hechos diarios de gasto, impresiones y clics.</p>
+<p>El contenido se modela en <code>content_items</code>, se distribuye mediante <code>content_channels</code> y conserva revisiones en <code>content_reviews</code>. Rechazos y solicitudes de cambio requieren comentario. La API y la interfaz son de lectura; no existe publicación automática ni workflow transaccional funcional.</p>
+<p>El presupuesto no se suma al gasto. La consulta 3 compara presupuesto con gasto de medios y otros costos, y calcula saldo sin duplicar filas.</p>
+<h2>10. Embudo y traspaso a ventas</h2>
+<p>El embudo usa cinco etapas ordenadas. <code>lead_stage_history</code> conserva transiciones y limita a una etapa abierta por lead. <code>sales_opportunities</code> registra valor, estado y fechas para calcular ciclo de venta.</p>
+<p>El handoff formal se registra en <code>marketing_sales_handoffs</code>, con responsables de marketing y ventas, número de intento, decisión y motivo de rechazo. <code>handoff_followups</code> conserva seguimientos. En el DEMO hay diez aceptados, uno rechazado y uno pendiente.</p>
+<p>La responsabilidad permanece humana: el diseño de agentes puede preparar y validar el expediente, pero no aceptar ni cerrar por ventas.</p>
+<h2>11. Métricas SQL y resultados DEMO</h2>
+<p>Se prepararon y ejecutaron 16 consultas SQL. Los resultados globales fueron reconciliados con la API:</p>
+<table><thead><tr><th>Métrica DEMO</th><th>Fórmula</th><th>Resultado</th></tr></thead><tbody><tr><td>CPC</td><td>USD 7.350 / 10.200 clics</td><td>USD 0,720588</td></tr><tr><td>CTR</td><td>10.200 / 378.200 impresiones</td><td>2,697 %</td></tr><tr><td>CAC</td><td>USD 7.935 / 10 suscripciones atribuidas</td><td>USD 793,50</td></tr><tr><td>ROAS</td><td>USD 1.122,80 / USD 7.350</td><td>0,152762</td></tr><tr><td>Conversión lead→suscripción</td><td>10 / 12</td><td>83,33 %</td></tr><tr><td>Ciclo promedio cerrado</td><td>Promedio de 11 oportunidades</td><td>9,2841 días</td></tr><tr><td>Ticket promedio</td><td>USD 1.122,80 / 22 pedidos</td><td>USD 51,036364</td></tr></tbody></table>
+<p>Los datos son ficticios. Un CPC anterior de USD 0,736568 y CTR de 2,68 % fueron descartados porque provenían de una unión que multiplicaba filas. Las cifras de esta tabla agregan cada fuente antes de relacionarla.</p>
+<p>Las consultas 14–16 producen margen, LTV observado y flujo operativo parciales. No incluyen todos los costos y movimientos necesarios. LTV/CAC, payback y flujo de caja completo siguen como información insuficiente.</p>
+<h2>12. Arquitectura de agentes</h2>
+<p>Se diseñaron siete especialistas:</p>
+<ol><li>Campañas y publicidad.</li><li>Contenidos y calendario editorial.</li><li>Revisión y aprobaciones.</li><li>Embudo y seguimiento de leads.</li><li>Traspaso entre marketing y ventas.</li><li>Suscripciones y clientes.</li><li>Analítica comercial y financiera.</li></ol>
+<p>Cada agente cuenta con objetivo, entradas, salidas, tablas, endpoints, reglas, límites, aprobaciones y ejemplo. Ninguno está implementado. Los criterios de evaluación propuestos penalizan como fallo crítico inventar datos, escribir sin aprobación, presentar DEMO como real o eludir al orquestador.</p>
+<h2>13. Agente orquestador</h2>
+<p>El orquestador propuesto recibe solicitudes, interpreta intención, clasifica la operación, divide tareas, elige agentes, valida resultados, solicita aprobación y consolida la respuesta. Los agentes especializados no se comunican directamente.</p>
+<p>Las lecturas y borradores no persistidos pueden avanzar sin una aprobación adicional. Toda escritura futura, gasto, publicación, contacto, cambio de etapa, aceptación, cobro, alta, cancelación o publicación externa requiere aprobación humana específica.</p>
+<p>Los contratos JSON propuestos incluyen <code>request_id</code>, <code>task_id</code>, alcance, endpoints permitidos, clasificación DEMO, evidencia, supuestos, limitaciones y estado. No constituyen endpoints implementados.</p>
+<h2>14. Caso de uso completo</h2>
+<p>El caso propuesto inicia con una campaña para captar suscriptores empresariales:</p>
+<ol><li>Campañas prepara plan y presupuesto.</li><li>Contenidos elabora piezas y calendario.</li><li>Revisión recomienda aprobar, rechazar o cambiar.</li><li>Una persona autoriza publicación.</li><li>Embudo recibe interacciones normalizadas y leads.</li><li>Marketing confirma calificación y etapa.</li><li>Handoff prepara la entrega; ventas decide.</li><li>Suscripciones prepara plan y alta después de un cierre ganado.</li><li>Operaciones sigue pedidos, entregas y eventos.</li><li>Analítica calcula indicadores y el orquestador consolida.</li></ol>
+<p>Cada paso tiene fuentes, intercambio y aprobación definidos en <code>docs/flujo_ejemplo_agentes.md</code>.</p>
+<h2>15. Validaciones</h2>
+<h3>Base y datos</h3>
+<ul><li>36 tablas creadas en base temporal aislada.</li><li>514 registros ficticios.</li><li>Mínimos conservadores de cinco registros en catálogos y diez en movimientos.</li><li>Cero FK huérfanas en controles críticos.</li><li>Cero errores de cronología, atribución duplicada o total de pedido.</li><li>Clics siempre menores o iguales a impresiones.</li></ul>
+<h3>SQL y API</h3>
+<ul><li>16 consultas ejecutables.</li><li>22 endpoints <code>GET</code> verificados.</li><li>Métricas reconciliadas entre resultados SQL y API.</li><li>Manejo de error consistente y modo DEMO explícito.</li></ul>
+<h3>Código</h3>
+<ul><li>15 pruebas aprobadas en Etapa 3.</li><li>Compilación Vite exitosa.</li><li>Rutas financieras anteriores conservadas.</li><li><code>financialEngine.js</code> no fue sustituido.</li></ul>
+<h3>Documentación</h3>
+<ul><li>Siete agentes diferenciados.</li><li>Coordinación exclusiva por orquestador.</li><li>Matriz RACI, riesgos, evaluación y contratos propuestos.</li><li>Fuentes Mermaid disponibles; render visual pendiente.</li></ul>
+<h2>16. Limitaciones</h2>
+<ul><li>No hay bibliografía académica verificada en el repositorio.</li><li>Los datos son sintéticos y no permiten conclusiones reales sobre Tueste.</li><li>No hay autenticación, autorización, auditoría ni endpoints de escritura.</li><li>No existen agentes funcionales ni conectores externos.</li><li>El CRM es una demostración de datos/consulta, no un sistema operativo completo.</li><li>El calendario editorial no tiene vista de calendario.</li><li>El recorrido del cliente no tiene pantalla dedicada.</li><li>Los diagramas se exportaron a SVG y PNG mediante un generador local sin</li></ul>
+<p>  dependencias; deben revisarse nuevamente al maquetar el PDF definitivo.</p>
+<ul><li>No se obtuvieron capturas durante esta auditoría.</li><li>El <code>README.md</code> raíz conserva una descripción de una etapa inicial y afirma que</li></ul>
+<p>  datos/conexión se incorporarían después; debe actualizarse antes de la entrega,   pero no se modificó en esta etapa por la restricción de cambiar solo entregables.</p>
+<ul><li>Margen, LTV y flujo operativo son parciales.</li><li>Payback, LTV/CAC y flujo de caja completo no tienen información suficiente.</li></ul>
+<h2>17. Conclusiones</h2>
+<p>Tueste Analytics demuestra una cadena coherente desde marketing hasta ingresos recurrentes. El modelo relacional evita almacenar indicadores derivados y usa historiales y relaciones N:M para mantener trazabilidad. Las consultas y la API permiten explicar indicadores comerciales sin presentar datos ficticios como reales.</p>
+<p>La arquitectura multiagente agrega una capa académica de especialización y gobierno. Su principal decisión es que la autonomía no equivale a autorización: el orquestador centraliza la coordinación y las personas conservan las decisiones con impacto comercial, financiero o externo.</p>
+<p>La entrega cubre los cinco criterios oficiales en sus artefactos técnicos y documentales. No debe considerarse lista para envío hasta completar datos de portada, bibliografía verificable si el profesor la exige y capturas reales.</p>
+<h2>18. Bibliografía</h2>
+<p>No se encontraron fuentes bibliográficas externas verificadas en el repositorio. Para evitar referencias inventadas, quedan los siguientes marcadores:</p>
+<ul><li><code>[PENDIENTE: fuente académica verificable sobre tercera forma normal]</code>.</li><li><code>[PENDIENTE: fuente académica verificable sobre CRM y customer journey]</code>.</li><li><code>[PENDIENTE: fuente verificable sobre CPC, CTR, CAC y ROAS]</code>.</li><li><code>[PENDIENTE: fuente académica verificable sobre arquitecturas multiagente]</code>.</li><li><code>[PENDIENTE: documentación oficial de React, Express, MySQL y Mermaid, con fecha de consulta]</code>.</li><li><code>[PENDIENTE: formato requerido: APA 7, IEEE u otro]</code>.</li></ul>
+<p>Las fuentes deben ser aportadas y verificadas por el estudiante, incluyendo autor, título, publicación, año, DOI/URL y fecha de consulta cuando aplique.</p>
+<h2>19. Anexos</h2>
+<h3>Anexo A. Esquema y datos</h3>
+<ul><li><code>database/schema_actual.sql</code></li><li><code>database/migracion_comercial_propuesta.sql</code></li><li><code>database/diagrama_er_comercial.mmd</code></li><li><code>entrega/diagramas/diagrama_er_comercial.svg</code></li><li><code>entrega/diagramas/diagrama_er_comercial.png</code></li><li><code>database/datos_ficticios_tueste.sql</code></li><li><code>database/validacion_datos_ficticios.md</code></li></ul>
+<h3>Anexo B. Métricas</h3>
+<ul><li><code>database/consultas_metricas_propuestas.sql</code></li><li><code>database/resultados_metricas_demo.md</code></li></ul>
+<h3>Anexo C. Aplicación</h3>
+<ul><li><code>backend/app.js</code></li><li><code>backend/app.test.js</code></li><li><code>src/components/CommercialDashboard.jsx</code></li><li><code>src/calculations/financialEngine.js</code></li></ul>
+<h3>Anexo D. Agentes</h3>
+<ul><li><code>docs/arquitectura_agentes.md</code></li><li><code>docs/fichas_agentes.md</code></li><li><code>docs/orquestador.md</code></li><li><code>docs/flujo_ejemplo_agentes.md</code></li><li><code>docs/diagrama_arquitectura_agentes.mmd</code></li><li><code>entrega/diagramas/diagrama_arquitectura_agentes.svg</code></li><li><code>entrega/diagramas/diagrama_arquitectura_agentes.png</code></li><li><code>docs/evaluacion_agentes.md</code></li><li><code>docs/contratos_agentes.md</code></li><li><code>docs/matriz_raci.md</code></li><li><code>docs/matriz_riesgos.md</code></li></ul>
+<h3>Anexo E. Auditoría</h3>
+<ul><li><code>docs/matriz_requisitos.md</code></li><li><code>docs/checklist_evidencias.md</code></li><li><code>entrega/tueste_business_solutions.sql</code></li></ul></body></html>
