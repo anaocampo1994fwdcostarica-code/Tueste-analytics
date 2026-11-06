@@ -193,26 +193,136 @@ export function rankValidPlans(results, tolerance = TIE_TOLERANCE) {
 }
 
 export function verifyManualMonthOne(state = LEVEL_THREE_DEFAULTS) {
-  const result = simulateLevelThreePlan(createDefaultPlans()[0], state);
-  const row = result.rows[0];
-  const units = calculateLevelThreeUnitEconomics(state);
+  const metaSpend = 8000;
+  const metaCustomers = 165;
+  const organicCustomers = 47;
+  const totalNewCustomers = metaCustomers + organicCustomers; // 212
+  const oneTimeShare = 0.85;
+  const subscriberShare = 0.15;
+  const oneTimeCustomers = totalNewCustomers * oneTimeShare; // 180.2
+  const subscribers = totalNewCustomers * subscriberShare; // 31.8
+
+  // Margen unitario calculado manualmente de forma independiente
+  const manualOneTimeUnit = 34 - (2 * 5.44) - 4.50 - (34 * 0.045) - 1.20; // 15.89
+  const manualSubscriptionUnit = 30.60 - (2 * 5.44) - 4.50 - (30.60 * 0.045) - 1.20; // 12.643
+
+  // Contribución de cohorte en mes 1 (edad 0: 1.0 pedido suelto y 100% retención suscripción)
+  const oneTimeContributionTotal = oneTimeCustomers * 1.0 * manualOneTimeUnit; // 2863.378
+  const subscriptionContributionTotal = subscribers * 1.0 * manualSubscriptionUnit; // 402.0474
+  const cohortContribution = oneTimeContributionTotal + subscriptionContributionTotal; // 3265.4254
+
+  const existingContribution = 9000;
+  const investment = metaSpend;
+  const agencyFee = 1000;
+  const fixedCosts = 6500;
+  const totalOutflows = investment + agencyFee + fixedCosts; // 15500
+
+  const openingCash = 35000;
+  const endingCash = openingCash + existingContribution + cohortContribution - totalOutflows; // 31765.4254
+
+  const engineResult = simulateLevelThreePlan(createDefaultPlans()[0], state);
+  const engineRow = engineResult.rows[0];
+  const engineEndingCash = engineRow.endingCash;
+  const difference = Math.abs(engineEndingCash - endingCash);
+  const matchesEngine = difference < 1e-6;
+
+  const steps = [
+    {
+      step: 1,
+      title: 'Clientes adquiridos en mes 1',
+      formula: 'Total nuevos = Clientes Meta (8.000) + Clientes orgánicos',
+      substitution: `Total nuevos = ${metaCustomers} + ${organicCustomers} = ${totalNewCustomers} clientes`,
+      result: `${totalNewCustomers} clientes`,
+    },
+    {
+      step: 2,
+      title: 'Segmentación de clientes nuevos',
+      formula: 'Sueltos (85%) = Total × 0.85 | Suscriptores (15%) = Total × 0.15',
+      substitution: `Sueltos = ${totalNewCustomers} × 0.85 = ${oneTimeCustomers.toFixed(1)} | Suscriptores = ${totalNewCustomers} × 0.15 = ${subscribers.toFixed(1)}`,
+      result: `${oneTimeCustomers.toFixed(1)} sueltos, ${subscribers.toFixed(1)} suscriptores`,
+    },
+    {
+      step: 3,
+      title: 'Margen de contribución unitario',
+      formula: 'Contribución = Precio − Café(2 bolsas) − Envío − Pasarela(4.5%) − Empaque',
+      substitution: `Suelto = 34.00 − 10.88 − 4.50 − 1.53 − 1.20 = 15.89 | Suscripción = 30.60 − 10.88 − 4.50 − 1.377 − 1.20 = 12.643`,
+      result: `Suelto: $${manualOneTimeUnit.toFixed(2)}, Suscripción: $${manualSubscriptionUnit.toFixed(3)}`,
+    },
+    {
+      step: 4,
+      title: 'Contribución total de la nueva cohorte',
+      formula: 'Cohorte = (Sueltos × 1.0 × Margen suelto) + (Suscriptores × 1.0 × Margen suscripción)',
+      substitution: `(${oneTimeCustomers.toFixed(1)} × 15.89) + (${subscribers.toFixed(1)} × 12.643) = ${oneTimeContributionTotal.toFixed(3)} + ${subscriptionContributionTotal.toFixed(4)} = ${cohortContribution.toFixed(4)}`,
+      result: `$${cohortContribution.toFixed(2)}`,
+    },
+    {
+      step: 5,
+      title: 'Contribución de clientes existentes',
+      formula: 'Contribución mes 1 = USD 9.000 fijos (decae 3% mensual en meses posteriores)',
+      substitution: `Existentes mes 1 = 9.000.00`,
+      result: '$9,000.00',
+    },
+    {
+      step: 6,
+      title: 'Salidas de caja del mes 1',
+      formula: 'Salidas = Inversión Meta + Fee agencia + Costos fijos',
+      substitution: `${investment} + ${agencyFee} + ${fixedCosts} = ${totalOutflows}`,
+      result: `$${totalOutflows.toLocaleString('es-CR')}`,
+    },
+    {
+      step: 7,
+      title: 'Caja final calculada independientemente',
+      formula: 'Caja final = Caja inicial + Existentes + Cohorte − Salidas',
+      substitution: `${openingCash} + ${existingContribution} + ${cohortContribution.toFixed(4)} − ${totalOutflows} = ${endingCash.toFixed(4)}`,
+      result: `$${endingCash.toFixed(2)}`,
+    },
+    {
+      step: 8,
+      title: 'Contraste riguroso con motor de simulación',
+      formula: '|Caja manual − Caja motor| < 0.000001',
+      substitution: `|${endingCash.toFixed(4)} − ${engineEndingCash.toFixed(4)}| = ${difference.toFixed(8)}`,
+      result: matchesEngine ? 'Coincidencia exacta demostrada (100% paridad)' : 'Discrepancia detectada',
+    },
+  ];
+
   return {
-    metaCustomers: 165,
-    organicCustomers: 47,
-    totalNewCustomers: 212,
-    oneTimeCustomers: 180.2,
-    subscribers: 31.8,
-    oneTimeContribution: units.standard,
-    subscriptionContribution: units.subscription,
-    cohortContribution: row.cohortContribution,
-    existingContribution: 9000,
-    investment: 8000,
-    agencyFee: 1000,
-    fixedCosts: 6500,
-    openingCash: 35000,
-    endingCash: row.endingCash,
-    matchesEngine: Math.abs(row.endingCash - (35000 + 9000 + row.cohortContribution - 8000 - 1000 - 6500)) < 1e-8,
+    metaCustomers,
+    organicCustomers,
+    totalNewCustomers,
+    oneTimeCustomers,
+    subscribers,
+    oneTimeUnitContribution: manualOneTimeUnit,
+    subscriptionUnitContribution: manualSubscriptionUnit,
+    oneTimeContribution: manualOneTimeUnit,
+    subscriptionContribution: manualSubscriptionUnit,
+    oneTimeContributionTotal,
+    subscriptionContributionTotal,
+    cohortContribution,
+    existingContribution,
+    investment,
+    agencyFee,
+    fixedCosts,
+    totalOutflows,
+    openingCash,
+    endingCash,
+    engineEndingCash,
+    difference,
+    matchesEngine,
+    steps,
   };
+}
+
+export function updatePlanChanges(plan, changes) {
+  return { ...plan, changes: { ...plan.changes, ...changes } };
+}
+
+export function updatePlanParameters(plan, params) {
+  return { ...plan, ...params };
+}
+
+export function resetPlan(planId) {
+  const defaults = createDefaultPlans();
+  return defaults.find((p) => p.id === planId) ?? defaults[0];
 }
 
 export function findBestPlan(state = LEVEL_THREE_DEFAULTS, step = 2000) {

@@ -4,7 +4,7 @@ const money = new Intl.NumberFormat('es-CR', { style: 'currency', currency: 'USD
 const number = new Intl.NumberFormat('es-CR', { maximumFractionDigits: 2 });
 const percentage = new Intl.NumberFormat('es-CR', { style: 'percent', maximumFractionDigits: 2 });
 const labels = { actual: 'Actual', agency: 'Agencia', pack: 'Pack' };
-const scenarioColors = { actual: '#447f70', agency: '#bf7769', pack: '#2b9b6d' };
+const scenarioColors = { actual: '#6D3C1C', agency: '#A7473F', pack: '#2D5A43' };
 
 const nullable = (value, formatter) => Number.isFinite(value) ? formatter(value) : 'No aplicable';
 const payback = (scenario) => scenario.cac == null
@@ -78,7 +78,7 @@ export default function LevelTwoDashboard({ model, assumptions, selectedScenario
     ? `Tramo anterior ${money.format(marginal.previous.value)}; siguiente ${money.format(marginal.next.value)} por cliente extra.`
     : marginal.selected ? `Tramo activo ${money.format(marginal.selected.fromSpend)}–${money.format(marginal.selected.toSpend)}.` : 'No aplicable.';
   const roasBelow = Number.isFinite(scenario.roasFirstOrder) && Number.isFinite(scenario.breakEvenRoas) && scenario.roasFirstOrder < scenario.breakEvenRoas;
-  return <section className="finance-section level2-board" id="nivel-2"><header className="level2-header"><div><p className="finance-eyebrow">Nivel 2 · Tablero interactivo</p><h2>Unidad económica y adquisición en vivo</h2><p>Modelo financiero original. No utiliza datos comerciales MYSQL_DEMO.</p></div><div className="scenario-switch" aria-label="Escenario seleccionado">{Object.entries(labels).map(([key,label]) => <button key={key} type="button" className={selectedScenario===key?'active':''} onClick={() => onSelectScenario(key)}>{label}</button>)}</div></header>
+  return <section className="finance-section level2-board" id="nivel-2"><header className="level2-header"><div><p className="finance-eyebrow">Tablero interactivo</p><h2>Unidad económica y adquisición en vivo</h2><p>Modelo financiero original. No utiliza datos comerciales MYSQL_DEMO.</p></div><div className="scenario-switch" aria-label="Escenario seleccionado">{Object.entries(labels).map(([key,label]) => <button key={key} type="button" className={selectedScenario===key?'active':''} onClick={() => onSelectScenario(key)}>{label}</button>)}</div></header>
     <div className="level2-layout"><article className="finance-card controls-card"><h3>Supuestos editables</h3><p>Los límites corresponden al caso académico. Los porcentajes se validan entre 0 % y 100 %.</p><div className="level2-controls">{LEVEL_TWO_CONTROLS.map((definition) => <Control key={definition.key} definition={definition} state={assumptions} onChange={onControlChange}/>)}</div>{validationError && <p className="control-error" role="alert">{validationError}</p>}<p className="finance-note">Al cambiar pedidos sueltos se escala proporcionalmente la distribución mensual original, conservando su forma. Restaurar recupera exactamente la distribución 1; 0,15; 0,20…</p></article>
       <div className="level2-metrics" aria-label="Ocho indicadores financieros">
         <MetricCard label="Margen de contribución" value={nullable(indicators.contribution.amount, money.format)} unit={`${nullable(indicators.contribution.rate, percentage.format)} del pedido`} explanation="Precio menos café, envío, pasarela y empaque."/>

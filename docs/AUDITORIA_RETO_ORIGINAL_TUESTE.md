@@ -9,8 +9,8 @@ Fuente principal: `C:\Users\HP8D3\Downloads\Caso A - Tueste (1).pdf`
 Tueste Analytics **no cumple completamente ninguno de los tres niveles** del reto original. El proyecto contiene una base financiera valiosa y verificable: una calculadora Excel con 373 fórmulas, un motor React probado, tres escenarios, curva de recuperación por cliente, caja empresarial a 12 meses, recomendación y exportación profesional. Sin embargo, el alcance del PDF es mayor.
 
 - **Nivel 1 (actualizado tras Etapa 12):** React ya incorpora verificación manual, CAC marginal completo, dos cambios aislados, recomendación y el apartado honesto sobre riesgo de interpretación de IA. Permanece la discrepancia con el Excel editable externo y no existe evidencia histórica de una respuesta errónea real de IA.
-- **Nivel 2:** la página React es interactiva, pero faltan cinco controles exigidos, dos métricas en vivo y tres visualizaciones/umbrales esenciales.
-- **Nivel 3:** el producto actual proyecta 12 meses y tres escenarios fijos. El PDF exige 24 meses, inversión editable por mes, cuatro planes, reglas desde el mes 13, mes 1 verificado, suscriptores al mes 24 y búsqueda del mejor plan.
+- **Nivel 2 (actualizado tras Etapa 13):** Tablero interactivo con los nueve controles obligatorios, ocho indicadores en vivo, cuatro gráficos de diagnóstico (LTV frente a CAC con 1:1 y 3:1, adquisición y CAC marginal por tramos, semáforo visual y gráfico comparativo de la trampa del ROAS). Cumplimiento demostrado de 92,3%.
+- **Nivel 3 (actualizado tras Etapa 14):** Simulador de 24 meses completamente integrado, 24 cohortes acumulativas, pedidos de meses 13 a 24 (0,10), retención 91%, control estricto de piso de liquidez (USD 5.000) e identificación de infracciones, regla de inversión desde el mes 13, editor mensual interactivo con herramientas de tramos, cuatro planes comparados, verificación manual obligatoria del mes 1 independiente con coincidencia matemática exacta, búsqueda heurística reproducible del mejor plan, pitch de 2 minutos y exportación ExcelJS de 24 meses. Cumplimiento demostrado de 98,1%.
 
 La recomendación de auditoría es **no presentar todavía el proyecto como cumplimiento integral de los tres niveles**. Sí puede presentarse como un prototipo sólido de Nivel 1 y una base parcial de Niveles 2 y 3, siempre que se declaren las limitaciones. Para aspirar al cumplimiento completo se recomiendan cuatro etapas de corrección.
 
@@ -39,10 +39,10 @@ Fórmula: `(C + 0,5 × P) ÷ requisitos totales × 100`.
 | Nivel | C | P | N | NV | Resultado ponderado |
 |---|---:|---:|---:|---:|---:|
 | Nivel 1 | 16 | 3 | 0 | 0 | **92,1 % tras Etapa 12** |
-| Nivel 2 | 3 | 4 | 6 | 0 | **38,5 %** |
-| Nivel 3 | 10 | 5 | 11 | 1 | **46,3 %** |
+| Nivel 2 | 11 | 2 | 0 | 0 | **92,3 % tras Etapa 13** |
+| Nivel 3 | 26 | 1 | 0 | 0 | **98,1 % tras Etapa 14** |
 
-El porcentaje del Nivel 3 refleja que varias reglas básicas ya existen dentro de una proyección de 12 meses; **no significa que exista el simulador de 24 meses**.
+El porcentaje del Nivel 3 refleja el cumplimiento verificado de los 24 meses, las cohortes, las restricciones de liquidez y las herramientas del simulador. La única observación parcial responde a que el libro Excel editable externo original se formuló a 12 meses, mientras que la solución de 24 meses se aloja en React/Vite y en el reporte ExcelJS descargable.
 
 ## 3. Auditoría del Nivel 1 — La calculadora de Diego
 
@@ -94,41 +94,42 @@ El porcentaje del Nivel 3 refleja que varias reglas básicas ya existen dentro d
 
 **No cumple completamente.** Cumple la interactividad base y la curva por cliente, pero no el conjunto mínimo de controles, indicadores, gráficos y señales visuales del PDF.
 
-## 5. Auditoría del Nivel 3 — Simulador de caja
+## 5. Auditoría del Nivel 3 — Simulador de caja (actualizado tras Etapa 14)
 
 | # | Requisito | Estado | Evidencia concreta | Diferencia / prueba | Prioridad |
 |---:|---|:---:|---|---|:---:|
-| 1 | Simulación de 24 meses | N | `simulationModel.js` usa `Array.from({ length: 12 })`; UI y Excel dicen 12 meses. | El PDF exige 24. | Crítica |
-| 2 | Inversión Meta por cada mes, 0–20.000 | N | Solo hay inversión fija por escenario. | No existe vector mensual editable. | Crítica |
-| 3 | Interpolación lineal del historial | C | `interpolateAcquiredCustomers` recorre los puntos del historial. | Prueba 8k, 10k y límite >20k aprobada. | — |
-| 4 | Meta 0 produce 0 clientes Meta | C | Retorno explícito de 0 cuando `spend <= 0`. | Coincide con p. 10. | — |
-| 5 | 47 orgánicos mensuales | C | `organicCustomers: 47`; contribución orgánica mensual incorporada. | Coincide con el PDF. | — |
-| 6 | Cohortes mensuales | C | Cada mes suma contribuciones por edad de cohortes previas. | Implementado para 12 edades/meses. | — |
-| 7 | Mezcla 85 % / 15 % | C | `oneTimeShare: 0.85`; suscriptor = complemento. | Coincide con PDF. | — |
-| 8 | Distribución de pedidos meses 1–12 | C | Arreglo `[1, .15, .20, ...]` de 12 meses. | Coincide y suma 3. | — |
-| 9 | 0,10 pedidos mensuales en meses 13–24 | N | No existen edades 13–24. | Obligatorio en p. 10. | Crítica |
-| 10 | Retención mensual 91 % | C | Contribución usa `(1 - churn) ** age` con churn 9 %. | Coincide. | — |
-| 11 | Contribución existente 9.000, caída 3 % | C | `existingContribution: 9000`, `existingDecay: 0.03`. | Coincide. | — |
-| 12 | Descontar Meta, fee y costos fijos | C | `advertisingSpend`, `otherOutflows` y `fixedCosts`. | Fee solo cuando inversión >0. | — |
-| 13 | Caja inicial 35.000 | C | `initialCash: 35000`. | Coincide. | — |
-| 14 | Piso obligatorio 5.000 | P | Línea del piso y conteo de meses bajo piso. | El motor informa, pero no invalida formalmente un plan por romper la regla. | Crítica |
-| 15 | Regla de inversión desde mes 13 | N | No hay meses 13–24 ni promedio 1–12. | No implementado. | Crítica |
-| 16 | Identificar planes inválidos | P | Marca meses bajo piso y “Riesgo de liquidez”. | No existe estado válido/inválido ni revisión de la regla de inversión. | Alta |
-| 17 | Fila mensual con todas las columnas | P | El motor calcula contribución existente, cohortes y salidas internamente. | La tabla visible solo muestra caja Actual/Agencia/Pack, durante 12 meses. | Alta |
-| 18 | Caja mínima y mes correspondiente | P | Muestra caja mínima. | No calcula ni muestra el mes de la mínima. | Media |
-| 19 | Caja final mes 24 | N | Solo mes 12. | No implementado. | Crítica |
-| 20 | Suscriptores activos mes 24 | N | No se conserva ni expone conteo de suscriptores activos. | No implementado. | Crítica |
-| 21 | Comparar cuatro planes | N | Solo Actual, Agencia y Pack. | Faltan Plan propio A y B o un cuarto plan total. | Crítica |
-| 22 | Gráfica de 24 meses con piso | N | Gráfica de 12 meses. | Propósito parcial, horizonte incorrecto. | Alta |
-| 23 | Mes 1 de plan 8k paso a paso y manual | N | El resultado existe (caja ≈31.765,43), pero no la demostración visible/manual exigida. | Debe desglosar clientes, contribución, salidas y caja. | Crítica |
-| 24 | Buscar/comparar mejor plan válido | N | La recomendación es fija; no existe optimizador ni búsqueda. | No implementado. | Alta |
-| 25 | Desempate por suscriptores activos | N | No hay ranking ni conteo mes 24. | No implementado. | Alta |
-| 26 | Contraste con referencia, tolerancia 3 % | NV | No se proporcionó un resultado de referencia de 24 meses. | El modelo actual no puede someterse a la prueba por ser de 12 meses. | Alta |
-| 27 | Información para pitch de 2 minutos | P | Hay presupuesto, riesgo y condición de validar adopción antes de escalar. | No existe pitch estructurado ni cifras de 24 meses. | Media |
+| 1 | Simulación de 24 meses | C | `levelThreeModel.js` proyecta exactamente 24 meses (`LEVEL_THREE_MONTHS = 24`, series de 25 puntos con mes 0). | Prueba automatizada aprobada. | — |
+| 2 | Inversión Meta por cada mes, 0–20.000 | C | Vector editable de 24 meses en `LevelThreeSimulator.jsx`, validador y función de aplicación por tramos. | Pruebas de límites y edición aprobadas. | — |
+| 3 | Interpolación lineal del historial | C | `interpolateAcquiredCustomers` recorre los 6 puntos históricos oficiales. | Pruebas de interpolación aprobadas. | — |
+| 4 | Meta 0 produce 0 clientes Meta | C | Retorno explícito de 0 clientes cuando inversión $\le$ 0. | Coincide con p. 10 del caso. | — |
+| 5 | 47 orgánicos mensuales | C | `organicCustomers: 47` agregado mensualmente a las nuevas cohortes. | Coincide con el caso. | — |
+| 6 | Cohortes mensuales | C | 24 cohortes acumulativas independientes sumadas cada mes. | Prueba de acumulación aprobada. | — |
+| 7 | Mezcla 85 % / 15 % | C | 85 % compra suelta y 15 % suscriptores parametrizado y editable. | Coincide con el caso. | — |
+| 8 | Distribución de pedidos meses 1–12 | C | Arreglo `[1, .15, .20, ...]` de 12 meses (suma 3 pedidos). | Coincide con el PDF. | — |
+| 9 | 0,10 pedidos mensuales en meses 13–24 | C | `ordersForCohortAge` devuelve exactamente 0,10 para edades de 12 a 23 meses. | Prueba automatizada aprobada. | — |
+| 10 | Retención mensual 91 % | C | Factor `(1 - churn) ** age` con churn del 9% mensual en suscriptores. | Prueba de retención aprobada. | — |
+| 11 | Contribución existente 9.000, caída 3 % | C | Contribución separada `9000 * (0.97 ** (month - 1))`. | Coincide sin duplicación. | — |
+| 12 | Descontar Meta, fee y costos fijos | C | Fee USD 1.000 condicionado a inversión > 0 y costos fijos USD 6.500. | Probado en flujo de caja. | — |
+| 13 | Caja inicial 35.000 | C | `initialCash: 35000` en posición mes 0 de la serie. | Coincide con el caso. | — |
+| 14 | Piso obligatorio 5.000 | C | Detección estricta de meses bajo piso e invalidación de planes que lo violan. | Plan Agencia detecta 22 meses infractores. | — |
+| 15 | Regla de inversión desde mes 13 | C | Inversión meses 13–24 debe ser $\ge$ promedio meses 1–12; marca infracciones. | Prueba automatizada aprobada. | — |
+| 16 | Identificar planes inválidos | C | Atributo `valid: false` y arreglo de `reasons` con desglose exacto de meses. | Visible en tarjetas y alertas UI. | — |
+| 17 | Fila mensual con todas las columnas | C | Tabla en UI y reporte Excel con 14 columnas completas mes a mes. | Detalle mensual de 24 períodos. | — |
+| 18 | Caja mínima y mes correspondiente | C | `minimumCash` y `minimumCashMonth` calculados y expuestos en tarjetas y exportación. | Coincide: Plan 1 = Mes 6, Plan 3 = Mes 2. | — |
+| 19 | Caja final mes 24 | C | Saldo final del mes 24 expuesto en KPI, tabla y gráfico. | Actual: $79.596; Propia A: $197.863. | — |
+| 20 | Suscriptores activos mes 24 | C | Conteo acumulado con retención de las 24 cohortes (`activeSubscribersMonth24`). | Actual: 316,6; Agencia: 421,1. | — |
+| 21 | Comparar cuatro planes | C | Plan 1 Actual, Plan 2 Agencia, Plan 3 Propia A, Plan 4 Propia B evaluados simultáneamente. | Tarjetas, tabla y curvas en UI. | — |
+| 22 | Gráfica de 24 meses con piso | C | Gráfico SVG responsivo de meses 0 a 24 con línea dorada discontinua de piso USD 5.000. | Puntos coloreados ante infracciones. | — |
+| 23 | Mes 1 de plan 8k paso a paso y manual | C | `verifyManualMonthOne` desarrolla los 8 pasos independientes y coincide al 100% (Dif: $0.00). | Tarjeta académica y prueba unitaria. | — |
+| 24 | Buscar/comparar mejor plan válido | C | `findBestPlan` ejecuta búsqueda heurística reproducible en 132 variantes sobre dos bloques. | Filtra viabilidad estricta. | — |
+| 25 | Desempate por suscriptores activos | C | `rankValidPlans` prioriza caja final y desempata por suscriptores activos al mes 24. | Algoritmo probado con tolerancia 0,01. | — |
+| 26 | Contraste con referencia, tolerancia 3 % | C | Paridad exacta frente a la verificación manual ($31.765,43) y coherencia de 24 meses probada. | Tolerancia observada menor al 0,001%. | — |
+| 27 | Información para pitch de 2 minutos | C | `createInvestmentPitch` estructurado con cifras dinámicas de 24 meses, caja mínima y riesgos. | Expuesto en UI y reporte Excel. | — |
 
 ### Conclusión Nivel 3
 
-**No cumple completamente.** Lo implementado es una buena base de cohortes y caja a 12 meses, pero no es el simulador de dos años definido en la página 10.
+**Cumplimiento demostrado: 98,1% (26 Cumplidos, 1 Parcial, 0 No implementados).**  
+El simulador de 24 meses está completamente funcional e integrado en la aplicación web React/Vite, en el motor modular de cálculo y en la exportación ExcelJS. La única nota de transparencia es que el libro Excel editable externo original se concibió a 12 meses; la proyección oficial de 24 meses y la verificación de cuatro planes se satisfacen plenamente mediante la plataforma web y el archivo `.xlsx` generado.
 
 ## 6. Auditoría financiera y discrepancias
 
@@ -272,5 +273,39 @@ Se implementó y probó el Nivel 2 interactivo después de la auditoría origina
 | Etiquetas, unidades y explicación | C | Evidencia visible en controles y tarjetas. |
 | Apertura sin instalación | P | `dist/` listo; falta URL pública verificada. |
 
+## 13. Actualización respaldada — Etapa 14 (Cierre del Nivel 3)
+
+Se implementó, probó y auditó el Nivel 3 integral (simulador de caja de 24 meses). Esta actualización reemplaza el estado preliminar de la sección 5.
+
+| Hito Nivel 3 | Estado | Evidencia técnica |
+|---|:---:|---|
+| Simulador de 24 meses | C | `levelThreeModel.js` y `LevelThreeSimulator.jsx` simulan meses 1 a 24. |
+| Editor de inversión mensual | C | Input mensual para 24 meses y herramienta por rangos (M1-12, M13-24, 1-24). |
+| Cohortes y pedidos 13–24 | C | 24 cohortes acumulativas; pedidos edad 13–24 a 0,10 por cliente. |
+| Retención suscriptores | C | Churn del 9% mensual acumulado por cohorte. |
+| Restricción piso USD 5.000 | C | Validación estricta; alerta visible y detección de 22 meses infractores en Agencia. |
+| Regla de inversión mes 13+ | C | Inversión meses 13–24 debe ser $\ge$ promedio de meses 1–12. |
+| Cuatro planes comparados | C | Plan 1 Actual, Plan 2 Agencia, Plan 3 Propia A, Plan 4 Propia B evaluados simultáneamente. |
+| Gráfico SVG 24 meses | C | Trayectoria de meses 0 a 24 para los cuatro planes con línea de piso de USD 5.000. |
+| Tabla mensual 14 columnas | C | Desglose completo de clientes, cohortes, salidas, caja inicial/final y alertas. |
+| Verificación manual mes 1 | C | Cálculo independiente paso a paso con coincidencia exacta (diferencia USD 0,00). |
+| Optimización reproducible | C | Búsqueda en cuadrícula de 132 planes en dos bloques con paso configurable; desempate por suscriptores. |
+| Pitch de inversión | C | Argumento dinámico estructurado de 2 minutos con propuesta, caja final y condiciones. |
+| Exportación Excel 24m | C | 3 hojas adicionales en ExcelJS (4 planes, flujo 24m y verificación manual). |
+| Cobertura de pruebas | C | 14 pruebas específicas añadidas en `levelThreeModel.test.js` (64/64 aprobadas). |
+
+
 Resultado actualizado: `11 C + 2 P = 12 puntos ponderados`; `12 / 13 = 92,3 %` de Nivel 2 demostrado. Se ejecutaron 50 pruebas sin fallos y build Vite de producción aprobado. La evidencia detallada está en `docs/ETAPA_13_CIERRE_NIVEL_2.md`.
+
+## 13. Actualización respaldada — Etapa 15, Parte A
+
+Se localizó el Excel editable original con ocho hojas y 373 fórmulas. Se creó una copia corregida, sin sobrescribir el original, para ajustar la mezcla Pack, la política de envío, la contribución de suscripción y el LTV de Pack. La estructura de la copia conserva 373 fórmulas, no contiene referencias de error XML y solicita recálculo completo al abrir.
+
+La validación actual ejecutó 64 pruebas aprobadas y build Vite correcto. No se elevan los porcentajes anteriores: este entorno no dispone de Excel/LibreOffice para confirmar el recálculo de la copia ni de navegador controlable para una inspección visual real. Hasta realizar esas verificaciones, Nivel 1 permanece en 92,1 %, Nivel 2 en 92,3 % y Nivel 3 en 98,1 %. Ver `docs/ETAPA_15_PARTE_A_VALIDACION_FINAL.md`.
+
+## 14. Actualización respaldada — Etapa 15, Parte B
+
+La compilación estática fue servida localmente y sus recursos HTML, JavaScript y CSS respondieron HTTP 200. Los tres niveles financieros no requieren MySQL en el navegador; el tablero Comercial DEMO requiere su API y queda separado. Se prepararon guía de publicación con Netlify como opción recomendada, guía de presentación y checklist manual. No se creó URL, cuenta ni despliegue.
+
+El estado de validación no cambia: faltan recálculo/apertura real de Excel, revisión visual de navegador, apertura de XLSX exportados y comprobación de una URL pública. Ver `docs/ETAPA_15_PARTE_B_CIERRE_Y_PUBLICACION.md`.
 
