@@ -1,0 +1,136 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="2600" height="2500" viewBox="0 0 2600 2500">
+  <rect width="100%" height="100%" fill="#f8faf7"/>
+  <text x="70" y="65" font-size="38" font-weight="700" font-family="Arial" fill="#173d29">Tueste Analytics — Diagrama ER (36 tablas)</text>
+  <text x="70" y="105" font-size="20" font-family="Arial" fill="#586d62">Cardinalidades Mermaid preservadas: || uno obligatorio · o| cero o uno · o{ cero o muchos · |{ uno o muchos</text>
+  <rect x="70" y="130" width="600" height="1084" rx="18" fill="#e2f1e7" stroke="#357052" stroke-width="2"/>
+  <text x="94" y="170" font-size="25" font-weight="700" fill="#173d29">Finanzas existentes</text>
+  <rect x="100" y="190" width="540" height="54" rx="9" fill="#ffffff" stroke="#6a7e73" stroke-width="1.5"/>
+  <text x="118" y="224" font-size="20" font-family="Arial" fill="#173d29">products</text>
+  <rect x="100" y="272" width="540" height="54" rx="9" fill="#ffffff" stroke="#6a7e73" stroke-width="1.5"/>
+  <text x="118" y="306" font-size="20" font-family="Arial" fill="#173d29">commercial_offers</text>
+  <rect x="100" y="354" width="540" height="54" rx="9" fill="#ffe1a8" stroke="#a45f00" stroke-width="3"/>
+  <text x="118" y="388" font-size="20" font-family="Arial" fill="#173d29">offer_products  [TABLA INTERMEDIA N:M]</text>
+  <rect x="100" y="436" width="540" height="54" rx="9" fill="#ffffff" stroke="#6a7e73" stroke-width="1.5"/>
+  <text x="118" y="470" font-size="20" font-family="Arial" fill="#173d29">product_variable_costs</text>
+  <rect x="100" y="518" width="540" height="54" rx="9" fill="#ffffff" stroke="#6a7e73" stroke-width="1.5"/>
+  <text x="118" y="552" font-size="20" font-family="Arial" fill="#173d29">order_variable_cost_assumptions</text>
+  <rect x="100" y="600" width="540" height="54" rx="9" fill="#ffffff" stroke="#6a7e73" stroke-width="1.5"/>
+  <text x="118" y="634" font-size="20" font-family="Arial" fill="#173d29">financial_assumptions</text>
+  <rect x="100" y="682" width="540" height="54" rx="9" fill="#ffffff" stroke="#6a7e73" stroke-width="1.5"/>
+  <text x="118" y="716" font-size="20" font-family="Arial" fill="#173d29">advertising_acquisition_history</text>
+  <rect x="100" y="764" width="540" height="54" rx="9" fill="#ffffff" stroke="#6a7e73" stroke-width="1.5"/>
+  <text x="118" y="798" font-size="20" font-family="Arial" fill="#173d29">commercial_scenarios</text>
+  <rect x="100" y="846" width="540" height="54" rx="9" fill="#ffffff" stroke="#6a7e73" stroke-width="1.5"/>
+  <text x="118" y="880" font-size="20" font-family="Arial" fill="#173d29">repurchase_patterns</text>
+  <rect x="100" y="928" width="540" height="54" rx="9" fill="#ffffff" stroke="#6a7e73" stroke-width="1.5"/>
+  <text x="118" y="962" font-size="20" font-family="Arial" fill="#173d29">subscription_parameters</text>
+  <rect x="100" y="1010" width="540" height="54" rx="9" fill="#ffffff" stroke="#6a7e73" stroke-width="1.5"/>
+  <text x="118" y="1044" font-size="20" font-family="Arial" fill="#173d29">simulation_configs</text>
+  <rect x="100" y="1092" width="540" height="54" rx="9" fill="#ffe1a8" stroke="#a45f00" stroke-width="3"/>
+  <text x="118" y="1126" font-size="20" font-family="Arial" fill="#173d29">simulation_config_scenarios  [TABLA INTERMEDIA N:M]</text>
+  <rect x="700" y="130" width="600" height="674" rx="18" fill="#fff4dc" stroke="#a66b00" stroke-width="2"/>
+  <text x="724" y="170" font-size="25" font-weight="700" fill="#173d29">Campañas y contenido</text>
+  <rect x="730" y="190" width="540" height="54" rx="9" fill="#ffffff" stroke="#6a7e73" stroke-width="1.5"/>
+  <text x="748" y="224" font-size="20" font-family="Arial" fill="#173d29">team_members</text>
+  <rect x="730" y="272" width="540" height="54" rx="9" fill="#ffffff" stroke="#6a7e73" stroke-width="1.5"/>
+  <text x="748" y="306" font-size="20" font-family="Arial" fill="#173d29">marketing_channels</text>
+  <rect x="730" y="354" width="540" height="54" rx="9" fill="#ffffff" stroke="#6a7e73" stroke-width="1.5"/>
+  <text x="748" y="388" font-size="20" font-family="Arial" fill="#173d29">campaigns</text>
+  <rect x="730" y="436" width="540" height="54" rx="9" fill="#ffffff" stroke="#6a7e73" stroke-width="1.5"/>
+  <text x="748" y="470" font-size="20" font-family="Arial" fill="#173d29">campaign_daily_metrics</text>
+  <rect x="730" y="518" width="540" height="54" rx="9" fill="#ffffff" stroke="#6a7e73" stroke-width="1.5"/>
+  <text x="748" y="552" font-size="20" font-family="Arial" fill="#173d29">content_items</text>
+  <rect x="730" y="600" width="540" height="54" rx="9" fill="#ffe1a8" stroke="#a45f00" stroke-width="3"/>
+  <text x="748" y="634" font-size="20" font-family="Arial" fill="#173d29">content_channels  [TABLA INTERMEDIA N:M]</text>
+  <rect x="730" y="682" width="540" height="54" rx="9" fill="#ffffff" stroke="#6a7e73" stroke-width="1.5"/>
+  <text x="748" y="716" font-size="20" font-family="Arial" fill="#173d29">content_reviews</text>
+  <rect x="1330" y="130" width="600" height="674" rx="18" fill="#fff4dc" stroke="#a66b00" stroke-width="2"/>
+  <text x="1354" y="170" font-size="25" font-weight="700" fill="#173d29">CRM y embudo</text>
+  <rect x="1360" y="190" width="540" height="54" rx="9" fill="#ffffff" stroke="#6a7e73" stroke-width="1.5"/>
+  <text x="1378" y="224" font-size="20" font-family="Arial" fill="#173d29">contacts</text>
+  <rect x="1360" y="272" width="540" height="54" rx="9" fill="#ffffff" stroke="#6a7e73" stroke-width="1.5"/>
+  <text x="1378" y="306" font-size="20" font-family="Arial" fill="#173d29">customer_journey_stages</text>
+  <rect x="1360" y="354" width="540" height="54" rx="9" fill="#ffffff" stroke="#6a7e73" stroke-width="1.5"/>
+  <text x="1378" y="388" font-size="20" font-family="Arial" fill="#173d29">customer_touchpoints</text>
+  <rect x="1360" y="436" width="540" height="54" rx="9" fill="#ffffff" stroke="#6a7e73" stroke-width="1.5"/>
+  <text x="1378" y="470" font-size="20" font-family="Arial" fill="#173d29">sales_funnel_stages</text>
+  <rect x="1360" y="518" width="540" height="54" rx="9" fill="#ffffff" stroke="#6a7e73" stroke-width="1.5"/>
+  <text x="1378" y="552" font-size="20" font-family="Arial" fill="#173d29">leads</text>
+  <rect x="1360" y="600" width="540" height="54" rx="9" fill="#ffffff" stroke="#6a7e73" stroke-width="1.5"/>
+  <text x="1378" y="634" font-size="20" font-family="Arial" fill="#173d29">lead_stage_history</text>
+  <rect x="1360" y="682" width="540" height="54" rx="9" fill="#ffffff" stroke="#6a7e73" stroke-width="1.5"/>
+  <text x="1378" y="716" font-size="20" font-family="Arial" fill="#173d29">sales_opportunities</text>
+  <rect x="1960" y="130" width="600" height="920" rx="18" fill="#fff4dc" stroke="#a66b00" stroke-width="2"/>
+  <text x="1984" y="170" font-size="25" font-weight="700" fill="#173d29">Handoffs y suscripciones</text>
+  <rect x="1990" y="190" width="540" height="54" rx="9" fill="#ffffff" stroke="#6a7e73" stroke-width="1.5"/>
+  <text x="2008" y="224" font-size="20" font-family="Arial" fill="#173d29">marketing_sales_handoffs</text>
+  <rect x="1990" y="272" width="540" height="54" rx="9" fill="#ffffff" stroke="#6a7e73" stroke-width="1.5"/>
+  <text x="2008" y="306" font-size="20" font-family="Arial" fill="#173d29">handoff_followups</text>
+  <rect x="1990" y="354" width="540" height="54" rx="9" fill="#ffffff" stroke="#6a7e73" stroke-width="1.5"/>
+  <text x="2008" y="388" font-size="20" font-family="Arial" fill="#173d29">subscription_plans</text>
+  <rect x="1990" y="436" width="540" height="54" rx="9" fill="#ffffff" stroke="#6a7e73" stroke-width="1.5"/>
+  <text x="2008" y="470" font-size="20" font-family="Arial" fill="#173d29">subscriptions</text>
+  <rect x="1990" y="518" width="540" height="54" rx="9" fill="#ffe1a8" stroke="#a45f00" stroke-width="3"/>
+  <text x="2008" y="552" font-size="20" font-family="Arial" fill="#173d29">subscription_items  [TABLA INTERMEDIA N:M]</text>
+  <rect x="1990" y="600" width="540" height="54" rx="9" fill="#ffffff" stroke="#6a7e73" stroke-width="1.5"/>
+  <text x="2008" y="634" font-size="20" font-family="Arial" fill="#173d29">subscription_orders</text>
+  <rect x="1990" y="682" width="540" height="54" rx="9" fill="#ffffff" stroke="#6a7e73" stroke-width="1.5"/>
+  <text x="2008" y="716" font-size="20" font-family="Arial" fill="#173d29">subscription_order_items</text>
+  <rect x="1990" y="764" width="540" height="54" rx="9" fill="#ffffff" stroke="#6a7e73" stroke-width="1.5"/>
+  <text x="2008" y="798" font-size="20" font-family="Arial" fill="#173d29">deliveries</text>
+  <rect x="1990" y="846" width="540" height="54" rx="9" fill="#ffffff" stroke="#6a7e73" stroke-width="1.5"/>
+  <text x="2008" y="880" font-size="20" font-family="Arial" fill="#173d29">subscription_events</text>
+  <rect x="1990" y="928" width="540" height="54" rx="9" fill="#ffffff" stroke="#6a7e73" stroke-width="1.5"/>
+  <text x="2008" y="962" font-size="20" font-family="Arial" fill="#173d29">campaign_attributions</text>
+  <text x="70" y="1260" font-size="30" font-weight="700" font-family="Arial" fill="#173d29">Relaciones y cardinalidades</text>
+  <text x="80" y="1320" font-size="16" font-family="Consolas, monospace" fill="#334b40">commercial_offers ||--o{ offer_products : contains</text>
+  <text x="910" y="1320" font-size="16" font-family="Consolas, monospace" fill="#334b40">products ||--o{ offer_products : included_in</text>
+  <text x="1740" y="1320" font-size="16" font-family="Consolas, monospace" fill="#334b40">products ||--o{ product_variable_costs : has_cost</text>
+  <text x="80" y="1374" font-size="16" font-family="Consolas, monospace" fill="#334b40">commercial_offers ||--o{ commercial_scenarios : evaluated_by</text>
+  <text x="910" y="1374" font-size="16" font-family="Consolas, monospace" fill="#334b40">order_variable_cost_assumptions o|--o{ commercial_scenarios : applies_to</text>
+  <text x="1740" y="1374" font-size="16" font-family="Consolas, monospace" fill="#334b40">financial_assumptions o|--o{ simulation_configs : configures</text>
+  <text x="80" y="1428" font-size="16" font-family="Consolas, monospace" fill="#334b40">simulation_configs ||--o{ simulation_config_scenarios : includes</text>
+  <text x="910" y="1428" font-size="16" font-family="Consolas, monospace" fill="#334b40">commercial_scenarios ||--o{ simulation_config_scenarios : participates</text>
+  <text x="1740" y="1428" font-size="16" font-family="Consolas, monospace" fill="#334b40">marketing_channels ||--o{ campaigns : hosts</text>
+  <text x="80" y="1482" font-size="16" font-family="Consolas, monospace" fill="#334b40">campaigns ||--o{ campaign_daily_metrics : records</text>
+  <text x="910" y="1482" font-size="16" font-family="Consolas, monospace" fill="#334b40">contacts ||--o{ customer_touchpoints : experiences</text>
+  <text x="1740" y="1482" font-size="16" font-family="Consolas, monospace" fill="#334b40">customer_journey_stages ||--o{ customer_touchpoints : classifies</text>
+  <text x="80" y="1536" font-size="16" font-family="Consolas, monospace" fill="#334b40">campaigns o|--o{ customer_touchpoints : originates</text>
+  <text x="910" y="1536" font-size="16" font-family="Consolas, monospace" fill="#334b40">marketing_channels o|--o{ customer_touchpoints : direct_source</text>
+  <text x="1740" y="1536" font-size="16" font-family="Consolas, monospace" fill="#334b40">contacts ||--o{ leads : generates</text>
+  <text x="80" y="1590" font-size="16" font-family="Consolas, monospace" fill="#334b40">campaigns o|--o{ leads : campaign_source</text>
+  <text x="910" y="1590" font-size="16" font-family="Consolas, monospace" fill="#334b40">marketing_channels o|--o{ leads : direct_source</text>
+  <text x="1740" y="1590" font-size="16" font-family="Consolas, monospace" fill="#334b40">team_members ||--o{ leads : marketing_owner</text>
+  <text x="80" y="1644" font-size="16" font-family="Consolas, monospace" fill="#334b40">leads ||--o{ lead_stage_history : transitions</text>
+  <text x="910" y="1644" font-size="16" font-family="Consolas, monospace" fill="#334b40">sales_funnel_stages ||--o{ lead_stage_history : stage</text>
+  <text x="1740" y="1644" font-size="16" font-family="Consolas, monospace" fill="#334b40">team_members ||--o{ lead_stage_history : changed_by</text>
+  <text x="80" y="1698" font-size="16" font-family="Consolas, monospace" fill="#334b40">leads ||--o| sales_opportunities : becomes</text>
+  <text x="910" y="1698" font-size="16" font-family="Consolas, monospace" fill="#334b40">team_members ||--o{ sales_opportunities : sales_owner</text>
+  <text x="1740" y="1698" font-size="16" font-family="Consolas, monospace" fill="#334b40">campaigns o|--o{ content_items : contains</text>
+  <text x="80" y="1752" font-size="16" font-family="Consolas, monospace" fill="#334b40">team_members ||--o{ content_items : authors</text>
+  <text x="910" y="1752" font-size="16" font-family="Consolas, monospace" fill="#334b40">content_items ||--o{ content_channels : distributed_on</text>
+  <text x="1740" y="1752" font-size="16" font-family="Consolas, monospace" fill="#334b40">marketing_channels ||--o{ content_channels : receives</text>
+  <text x="80" y="1806" font-size="16" font-family="Consolas, monospace" fill="#334b40">content_items ||--o{ content_reviews : reviewed_in</text>
+  <text x="910" y="1806" font-size="16" font-family="Consolas, monospace" fill="#334b40">team_members ||--o{ content_reviews : reviews</text>
+  <text x="1740" y="1806" font-size="16" font-family="Consolas, monospace" fill="#334b40">leads ||--o{ marketing_sales_handoffs : handed_off</text>
+  <text x="80" y="1860" font-size="16" font-family="Consolas, monospace" fill="#334b40">team_members ||--o{ marketing_sales_handoffs : owns</text>
+  <text x="910" y="1860" font-size="16" font-family="Consolas, monospace" fill="#334b40">marketing_sales_handoffs ||--o{ handoff_followups : followed_by</text>
+  <text x="1740" y="1860" font-size="16" font-family="Consolas, monospace" fill="#334b40">team_members ||--o{ handoff_followups : performs</text>
+  <text x="80" y="1914" font-size="16" font-family="Consolas, monospace" fill="#334b40">commercial_offers ||--o{ subscription_plans : commercial_basis</text>
+  <text x="910" y="1914" font-size="16" font-family="Consolas, monospace" fill="#334b40">subscription_parameters o|--o{ subscription_plans : financial_basis</text>
+  <text x="1740" y="1914" font-size="16" font-family="Consolas, monospace" fill="#334b40">contacts ||--o{ subscriptions : subscribes</text>
+  <text x="80" y="1968" font-size="16" font-family="Consolas, monospace" fill="#334b40">subscription_plans ||--o{ subscriptions : selected</text>
+  <text x="910" y="1968" font-size="16" font-family="Consolas, monospace" fill="#334b40">leads o|--o| subscriptions : converts_to</text>
+  <text x="1740" y="1968" font-size="16" font-family="Consolas, monospace" fill="#334b40">subscriptions ||--o{ subscription_items : customized_with</text>
+  <text x="80" y="2022" font-size="16" font-family="Consolas, monospace" fill="#334b40">products ||--o{ subscription_items : selected</text>
+  <text x="910" y="2022" font-size="16" font-family="Consolas, monospace" fill="#334b40">subscriptions ||--o{ subscription_orders : generates</text>
+  <text x="1740" y="2022" font-size="16" font-family="Consolas, monospace" fill="#334b40">subscription_orders ||--o{ subscription_order_items : contains</text>
+  <text x="80" y="2076" font-size="16" font-family="Consolas, monospace" fill="#334b40">products ||--o{ subscription_order_items : sold_as</text>
+  <text x="910" y="2076" font-size="16" font-family="Consolas, monospace" fill="#334b40">subscription_orders ||--o| deliveries : fulfilled_by</text>
+  <text x="1740" y="2076" font-size="16" font-family="Consolas, monospace" fill="#334b40">subscriptions ||--o{ subscription_events : changes</text>
+  <text x="80" y="2130" font-size="16" font-family="Consolas, monospace" fill="#334b40">subscription_plans o|--o{ subscription_events : plan_reference</text>
+  <text x="910" y="2130" font-size="16" font-family="Consolas, monospace" fill="#334b40">campaigns ||--o{ campaign_attributions : credited_by</text>
+  <text x="1740" y="2130" font-size="16" font-family="Consolas, monospace" fill="#334b40">leads ||--o| campaign_attributions : attributed_conversion</text>
+  <text x="80" y="2184" font-size="16" font-family="Consolas, monospace" fill="#334b40">subscriptions ||--o| campaign_attributions : acquired_subscription</text>
+  <text x="70" y="2440" font-size="17" font-family="Arial" fill="#7a4c00">Naranja intenso: tabla intermedia N:M · Verde: tablas financieras existentes · Amarillo: extensión comercial</text>
+</svg>
