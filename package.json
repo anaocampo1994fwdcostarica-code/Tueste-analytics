@@ -7,7 +7,7 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "test": "node --test src/calculations/*.test.js src/financial/*.test.js backend/*.test.js"
+    "test": "node --test src/calculations/*.test.js src/config/*.test.js src/financial/*.test.js src/growth/*.test.js backend/*.test.js"
   },
   "dependencies": {
     "exceljs": "^4.4.0",
