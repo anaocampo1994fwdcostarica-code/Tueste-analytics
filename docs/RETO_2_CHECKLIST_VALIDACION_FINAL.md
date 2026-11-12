@@ -6,8 +6,8 @@
 - [x] Duplicado, autoinvitación, compra repetida y acreditación única cubiertos por pruebas.
 - [x] Plan: crear, editar, eliminar, estado, métricas/metas, persistir, recuperar y restablecer cubiertos por pruebas.
 - [x] Integridad de embudo, viralidad, costos, cohortes, payback e ICE cubierta por pruebas.
-- [x] Registrar resumen final de `npm test`: 83 pruebas aprobadas, 0 fallidas.
-- [x] Registrar resumen final de `npm run build`: build exitoso con Vite 7.3.7.
+- [x] Registrar resumen actual de `npm test`: 97 pruebas aprobadas, 0 fallidas.
+- [x] Registrar resumen actual de `npm run build`: build exitoso con Vite 7.3.7 fuera del aislamiento de ejecución.
 
 ## Manual reproducible — escritorio (≥1280 px)
 
@@ -29,10 +29,19 @@
 
 ## Estado de esta ejecución
 
+### Clasificación de evidencia
+
+- **Comprobado automáticamente:** 97 pruebas aprobadas, 0 fallos; persistencia, antifraude, recompensas DEMO, panel Growth, plan de 90 días, cálculos financieros, regresiones y exportaciones.
+- **Comprobado técnicamente:** `npm run build` termina correctamente con Vite 7.3.7 fuera del aislamiento. El intento dentro del aislamiento falló por permisos de esbuild al resolver `vite.config.js`, no por un error de compilación del proyecto.
+- **Comprobado visualmente:** la ejecución histórica documentada cubre escritorio y un ancho estrecho efectivo de aproximadamente 450 px para Rewards y Panel Growth.
+- **Pendiente:** validación visual real en 1440, 1024, 768, 390 y 320 px; Landing, modal, perfiles, registro, invitado, compra, sidebar y dashboard financiero en esos tamaños; revisión de consola durante el recorrido completo.
+- **Pendiente por dependencia externa:** contraste contra el PDF oficial `Caso A — Tueste (Parte 2)`, que no está presente en el repositorio ni en los adjuntos accesibles.
+- **No aplicable al prototipo DEMO:** pagos, pedidos, envío real de WhatsApp y sincronización entre dispositivos.
+
 La validación visual ejecutada con frontend y backend disponibles quedó registrada en:
 
 - Escritorio: `#tueste-rewards` y `#panel-growth` cargan correctamente, sin desbordamiento horizontal ni errores de consola.
 - Móvil estrecho: el navegador integrado tuvo un ancho mínimo efectivo de 450 px. En esa resolución, `#tueste-rewards` y `#panel-growth` no presentan desbordamiento horizontal y los títulos principales cargan; no se simuló ni afirma un dispositivo físico de 375 × 812 px.
 - Interacción: Rewards y el editor persistente del plan aparecen y pueden navegarse.
 
-Queda pendiente únicamente ejecutar físicamente los escenarios DEMO de modificación de datos si se requiere evidencia de sesión más allá de las pruebas automatizadas.
+Queda pendiente ejecutar físicamente los escenarios DEMO de modificación de datos si se requiere evidencia de sesión más allá de las pruebas automatizadas, y repetir el recorrido completo en los cinco anchos solicitados.
